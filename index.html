@@ -1,57 +1,138 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>For My Cutie 💖</title>
+
 <style>
 body {
-  background: pink;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
+  font-family: Poppins, sans-serif;
+  background: radial-gradient(circle, #ffd6e0, #ff8fab);
 }
 
 .container {
   text-align: center;
+  z-index: 5;
 }
 
-h1 {
-  font-size: 48px;
-  font-weight: bold;
+.name {
+  font-size: 44px;
+  font-weight: 900;
+  color: #c9184a;
+}
+
+.question {
+  font-size: 50px;
+  font-weight: 900;
+  margin: 18px 0 30px;
+}
+
+.buttons {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
 }
 
 button {
   font-size: 22px;
-  padding: 12px 30px;
-  margin: 15px;
-  border-radius: 30px;
+  padding: 14px 40px;
+  border-radius: 40px;
   border: none;
+  font-weight: bold;
   cursor: pointer;
 }
 
-#yes {
-  background: white;
+#yesBtn {
+  background: #2dc653;
+  color: white;
 }
 
-#no {
-  background: black;
+#noBtn {
+  background: #e63946;
   color: white;
   position: absolute;
 }
 
-/* F1 car */
-.car {
-  position: absolute;
-  bottom: 20px;
-  font-size: 60px;
-  animation: drive 4s linear infinite;
+.taunt {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #7a0a2a;
+  height: 25px;
 }
 
-@keyframes drive {
-  from { left: 100%; }
-  to { left: -200px; }
+/* Explosion */
+.explode {
+  animation: boom 0.4s ease forwards;
+}
+
+@keyframes boom {
+  to {
+    transform: scale(4) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Flowers */
+.flower {
+  position: absolute;
+  font-size: 28px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Love Letter */
+.letter {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #9d0208;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  animation: open 0.6s ease forwards;
+}
+
+@keyframes open {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Kiss */
+.kiss {
+  position: absolute;
+  font-size: 40px;
+  animation: kissPop 1.2s ease forwards;
+}
+
+@keyframes kissPop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(0.5); opacity: 0; }
+}
+
+/* F1 Car */
+.car {
+  position: absolute;
+  font-size: 55px;
+  transition: 0.2s linear;
 }
 </style>
 </head>
@@ -59,39 +140,91 @@ button {
 <body>
 
 <div class="container">
-  <h1>Will you be my cutie? 💘</h1>
-  <button id="yes">YES</button>
-  <button id="no">NO</button>
+  <div class="name">My Cutie 💖</div>
+  <div class="question">Will you be my Valentine?</div>
+
+  <div class="buttons">
+    <button id="yesBtn">YES 💘</button>
+    <button id="noBtn">NO 😈</button>
+  </div>
+
+  <div class="taunt" id="taunt"></div>
 </div>
 
-<div class="car">🏎️</div>
+<div class="letter" id="letter">
+💌 My Cutie,<br><br>
+You make my world brighter every day.<br>
+You are my favorite forever.<br><br>
+Love,<br>
+Your Cutie 💕
+</div>
+
+<div class="car" id="car">🏎️</div>
 
 <script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const taunt = document.getElementById("taunt");
+const letter = document.getElementById("letter");
+const car = document.getElementById("car");
 
-// NO keeps dodging forever
-setInterval(() => {
-  noBtn.style.left = Math.random() * 80 + "%";
-  noBtn.style.top = Math.random() * 80 + "%";
-}, 500);
+const savageTaunts = [
+  "Not happening 😈",
+  "You're chasing love now?",
+  "Catch me first 💨",
+  "Nope. Never 😏",
+  "Try harder baby 😜",
+  "You wish 💅",
+  "Too slow 😎"
+];
 
-// Taunts user
-const taunts = ["Nice try 😏", "Too slow 😜", "Missed me 😎", "Not today 😈"];
-noBtn.addEventListener("mouseenter", () => {
-  noBtn.innerText = taunts[Math.floor(Math.random() * taunts.length)];
-});
+// Move NO constantly
+function moveNo() {
+  const x = Math.random() * (window.innerWidth - 140);
+  const y = Math.random() * (window.innerHeight - 140);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
 
-// YES wins
+  taunt.textContent = savageTaunts[Math.floor(Math.random()*savageTaunts.length)];
+
+  // Move car chasing NO
+  car.style.left = x - 60 + "px";
+  car.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseenter", moveNo);
+
+// Auto keep NO moving every second
+setInterval(moveNo, 1200);
+
+// YES CLICKED — CHAOS + ROMANCE
 yesBtn.addEventListener("click", () => {
-  noBtn.style.transition = "opacity 1s";
-  noBtn.style.opacity = "0";
+  noBtn.classList.add("explode");
+  taunt.textContent = "";
 
-  document.body.innerHTML += `
-    <h1 style="position:absolute;top:40%;font-size:50px;">BOOM 💥 LOVE 💖</h1>
-  `;
-});
-</script>
+  setTimeout(() => noBtn.remove(), 350);
 
-</body>
-</html>
+  // Flowers storm
+  for (let i = 0; i < 45; i++) {
+    const flower = document.createElement("div");
+    flower.classList.add("flower");
+    flower.textContent = ["🌸","🌹","💐","🌺","🌷"][Math.floor(Math.random()*5)];
+    flower.style.left = Math.random() * 100 + "vw";
+    flower.style.top = "-20px";
+    flower.style.animationDuration = (1.5 + Math.random()*2) + "s";
+    document.body.appendChild(flower);
+    setTimeout(() => flower.remove(), 3000);
+  }
+
+  // Love letter reveal
+  letter.style.display = "block";
+
+  // Kiss explosions
+  for (let i = 0; i < 12; i++) {
+    const kiss = document.createElement("div");
+    kiss.classList.add("kiss");
+    kiss.textContent = "💋";
+    kiss.style.left = Math.random() * 100 + "vw";
+    kiss.style.top = Math.random() * 100 + "vh";
+    document.body צור
+::contentReference[oaicite:0]{index=0}
