@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +44,7 @@ button {
   font-size: 1.1rem;
   border: none;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: 0.15s ease;
 }
 
 /* YES BUTTON */
@@ -63,7 +64,7 @@ button {
   background: white;
   color: #ff4f9a;
   border: 2px solid #ff4f9a;
-  position: relative;
+  position: fixed;
 }
 
 /* Tease message */
@@ -126,30 +127,42 @@ const yesBtn = document.getElementById("yesBtn");
 const tease = document.getElementById("tease");
 const msg = document.getElementById("message");
 
-// Teasing messages
+let dodgeInterval;
+
+// Tease messages
 const teaseLines = [
   "Nice try 😏",
-  "You can't click me 😈",
-  "Wrong choice, Cutie 😜",
-  "Try harder 😂",
+  "You can't catch me 😈",
+  "Too slow 😂",
+  "Not today, Cutie 😜",
   "Love always wins 💕",
-  "Just click YES already 😘"
+  "Give up already 😘"
 ];
 
-// NO moves ONLY when hovered
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * (window.innerWidth - 150);
-  const y = Math.random() * (window.innerHeight - 150);
+// Start dodging when mouse gets near
+noBtn.addEventListener("mouseenter", () => {
+  dodgeInterval = setInterval(moveNo, 200);
+});
 
-  noBtn.style.position = "fixed";
+// Stop dodging when mouse leaves
+noBtn.addEventListener("mouseleave", () => {
+  clearInterval(dodgeInterval);
+});
+
+// Move NO randomly
+function moveNo() {
+  const x = Math.random() * (window.innerWidth - 160);
+  const y = Math.random() * (window.innerHeight - 160);
+
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 
   tease.innerText = teaseLines[Math.floor(Math.random() * teaseLines.length)];
-});
+}
 
-// YES click action
+// YES clicked
 yesBtn.addEventListener("click", () => {
+  clearInterval(dodgeInterval);
 
   // NO explodes
   noBtn.innerText = "💥";
@@ -161,7 +174,7 @@ yesBtn.addEventListener("click", () => {
   💌 My Sweet Cutie,<br><br>
   You just made my heart the happiest ever 💖  
   Thank you for being my Valentine.  
-  You mean more to me than words can ever say.  
+  You mean more to me than words can say.  
   I love you endlessly 💞  
   <br><br> — Forever Yours 💘
   `;
