@@ -33,12 +33,6 @@ body {
   margin: 16px 0 30px;
 }
 
-.buttons {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-}
-
 button {
   font-size: 22px;
   padding: 14px 42px;
@@ -56,7 +50,7 @@ button {
 #noBtn {
   background: #e63946;
   color: white;
-  position: absolute;
+  position: fixed;
 }
 
 .taunt {
@@ -68,20 +62,20 @@ button {
 
 /* Explosion */
 .explode {
-  animation: boom 0.45s ease forwards;
+  animation: boom 0.4s ease forwards;
 }
 
 @keyframes boom {
   to {
-    transform: scale(3.5) rotate(360deg);
+    transform: scale(3) rotate(360deg);
     opacity: 0;
   }
 }
 
 /* Flowers */
 .flower {
-  position: absolute;
-  font-size: 32px;
+  position: fixed;
+  font-size: 34px;
   animation: fall 3s linear forwards;
 }
 
@@ -92,7 +86,7 @@ button {
   }
 }
 
-/* Love Message */
+/* Message */
 .message {
   display: none;
   position: fixed;
@@ -114,26 +108,6 @@ button {
     transform: translate(-50%, -50%) scale(1);
   }
 }
-
-/* Kiss */
-.kiss {
-  position: absolute;
-  font-size: 40px;
-  animation: kissPop 1.2s ease forwards;
-}
-
-@keyframes kissPop {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.4); opacity: 1; }
-  100% { transform: scale(0.5); opacity: 0; }
-}
-
-/* F1 Car */
-.car {
-  position: absolute;
-  font-size: 60px;
-  transition: 0.15s linear;
-}
 </style>
 </head>
 
@@ -142,93 +116,69 @@ button {
 <div class="container">
   <div class="name">My Cutie 💖</div>
   <div class="question">Will you be my Valentine?</div>
-
-  <div class="buttons">
-    <button id="yesBtn">YES 💘</button>
-    <button id="noBtn">NO 😈</button>
-  </div>
-
+  <button id="yesBtn">YES 💘</button>
   <div class="taunt" id="taunt"></div>
 </div>
 
+<button id="noBtn">NO 😈</button>
+
 <div class="message" id="message">
 💌 My Cutie,<br><br>
-You are my favorite person in the world.<br>
-I choose you today and always.<br><br>
+You just made me the happiest person alive 💕<br>
+You’re stuck with me forever 😏💖<br><br>
 Love,<br>
-Your Cutie 💕
+Your Cutie 💘
 </div>
-
-<div class="car" id="car">🏎️</div>
 
 <script>
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const taunt = document.getElementById("taunt");
 const message = document.getElementById("message");
-const car = document.getElementById("car");
 
-const savageTaunts = [
+const taunts = [
   "Nice try 😈",
-  "Catch me first 💨",
-  "Nope 😏",
+  "Catch me 😏",
+  "Too slow 💨",
   "Dream on 💅",
-  "Too slow 😎",
-  "Almost had me 😜",
-  "You wish 💖"
+  "Almost 😜",
+  "Not today 😂",
+  "Say YES already 💖"
 ];
 
 function moveNo() {
-  const x = Math.random() * (window.innerWidth - 160);
-  const y = Math.random() * (window.innerHeight - 160);
+  const x = Math.random() * (window.innerWidth - 140);
+  const y = Math.random() * (window.innerHeight - 100);
 
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 
-  taunt.textContent = savageTaunts[Math.floor(Math.random() * savageTaunts.length)];
-
-  // Car chases NO
-  car.style.left = (x - 70) + "px";
-  car.style.top = y + "px";
+  taunt.textContent = taunts[Math.floor(Math.random() * taunts.length)];
 }
 
-// Move NO when hovered
+// Move instantly on hover
 noBtn.addEventListener("mouseenter", moveNo);
 
-// Keep NO moving forever
-setInterval(moveNo, 1000);
+// Keep moving nonstop
+setInterval(moveNo, 900);
 
-// YES click = romance chaos
+// YES click event
 yesBtn.addEventListener("click", () => {
   noBtn.classList.add("explode");
-  taunt.textContent = "";
 
-  setTimeout(() => noBtn.remove(), 400);
+  setTimeout(() => noBtn.remove(), 350);
 
-  // Flowers burst
+  // Flowers rain
   for (let i = 0; i < 40; i++) {
     const flower = document.createElement("div");
     flower.classList.add("flower");
     flower.textContent = ["🌸","🌹","💐","🌺","🌷"][Math.floor(Math.random()*5)];
     flower.style.left = Math.random() * 100 + "vw";
     flower.style.top = "-20px";
-    flower.style.animationDuration = (1.5 + Math.random()*2) + "s";
     document.body.appendChild(flower);
     setTimeout(() => flower.remove(), 3000);
   }
 
-  // Kiss pops
-  for (let i = 0; i < 12; i++) {
-    const kiss = document.createElement("div");
-    kiss.classList.add("kiss");
-    kiss.textContent = "💋";
-    kiss.style.left = Math.random() * 100 + "vw";
-    kiss.style.top = Math.random() * 100 + "vh";
-    document.body.appendChild(kiss);
-    setTimeout(() => kiss.remove(), 1200);
-  }
-
-  // Show love message
   message.style.display = "block";
 });
 </script>
