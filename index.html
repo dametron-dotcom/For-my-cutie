@@ -1,186 +1,164 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>For My Cutie 💖</title>
-
 <style>
 body {
   margin: 0;
   height: 100vh;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Poppins, sans-serif;
-  background: linear-gradient(135deg, #ffc2d1, #ff8fab);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffd6e8, #ffeaf3);
+  overflow: hidden;
 }
 
 .container {
-  text-align: center;
-  z-index: 5;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  padding: 45px 65px;
+  border-radius: 30px;
+  box-shadow: 0 15px 45px rgba(255, 105, 180, 0.3);
+  position: relative;
 }
 
-.name {
-  font-size: 46px;
-  font-weight: 900;
-  color: #c9184a;
+h1 {
+  color: #ff4f9a;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
 }
 
-.question {
-  font-size: 52px;
-  font-weight: 900;
-  margin: 16px 0 30px;
+p {
+  color: #ff6fae;
+  font-size: 1.2rem;
+  margin-bottom: 25px;
 }
 
 button {
-  font-size: 22px;
-  padding: 14px 42px;
-  border-radius: 40px;
+  padding: 14px 32px;
+  border-radius: 35px;
+  font-size: 1.1rem;
   border: none;
-  font-weight: bold;
   cursor: pointer;
+  transition: 0.2s ease;
+  position: relative;
 }
 
+/* YES BUTTON */
 #yesBtn {
-  background: #2dc653;
+  background: #ff4f9a;
   color: white;
+  box-shadow: 0 6px 18px rgba(255, 79, 154, 0.5);
 }
 
+#yesBtn:hover {
+  transform: scale(1.1);
+  background: #ff2f86;
+}
+
+/* NO BUTTON */
 #noBtn {
-  background: #e63946;
-  color: white;
-  position: fixed;
-}
-
-.taunt {
-  margin-top: 18px;
-  font-size: 18px;
-  color: #7a0a2a;
-  height: 25px;
-}
-
-/* Explosion */
-.explode {
-  animation: boom 0.4s ease forwards;
-}
-
-@keyframes boom {
-  to {
-    transform: scale(3) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-/* Flowers */
-.flower {
-  position: fixed;
-  font-size: 34px;
-  animation: fall 3s linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
-}
-
-/* Message */
-.message {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.5);
   background: white;
-  padding: 35px;
-  border-radius: 18px;
-  font-size: 22px;
-  font-weight: bold;
-  color: #9d0208;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  animation: pop 0.6s ease forwards;
+  color: #ff4f9a;
+  border: 2px solid #ff4f9a;
+  position: absolute;
 }
 
-@keyframes pop {
-  to {
-    transform: translate(-50%, -50%) scale(1);
-  }
+/* F1 CAR */
+#car {
+  position: absolute;
+  font-size: 45px;
+  animation: drive 6s linear infinite;
+}
+
+@keyframes drive {
+  0% { left: -80px; top: 85%; }
+  100% { left: 110%; top: 85%; }
+}
+
+/* Celebration */
+.heart, .flower {
+  position: absolute;
+  font-size: 28px;
+  animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-200px); }
+}
+
+#message {
+  font-size: 1.4rem;
+  color: #ff2f86;
+  font-weight: bold;
+  margin-top: 20px;
 }
 </style>
 </head>
-
 <body>
 
+<div id="car">🏎️</div>
+
 <div class="container">
-  <div class="name">My Cutie 💖</div>
-  <div class="question">Will you be my Valentine?</div>
+  <h1>My Cutie 💖</h1>
+  <p>Will you be my Valentine? <br> — From Your Cutie</p>
+
   <button id="yesBtn">YES 💘</button>
-  <div class="taunt" id="taunt"></div>
-</div>
+  <button id="noBtn">NO 🙃</button>
 
-<button id="noBtn">NO 😈</button>
-
-<div class="message" id="message">
-💌 My Cutie,<br><br>
-You just made me the happiest person alive 💕<br>
-You’re stuck with me forever 😏💖<br><br>
-Love,<br>
-Your Cutie 💘
+  <div id="message"></div>
 </div>
 
 <script>
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
-const taunt = document.getElementById("taunt");
-const message = document.getElementById("message");
+const msg = document.getElementById("message");
 
-const taunts = [
+const teasing = [
   "Nice try 😈",
-  "Catch me 😏",
   "Too slow 💨",
-  "Dream on 💅",
-  "Almost 😜",
-  "Not today 😂",
-  "Say YES already 💖"
+  "You can't catch me 😂",
+  "NO means chase me 😏",
+  "Hehe nope 💖"
 ];
 
-function moveNo() {
-  const x = Math.random() * (window.innerWidth - 140);
-  const y = Math.random() * (window.innerHeight - 100);
-
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 120);
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
-
-  taunt.textContent = taunts[Math.floor(Math.random() * taunts.length)];
-}
-
-// Move instantly on hover
-noBtn.addEventListener("mouseenter", moveNo);
-
-// Keep moving nonstop
-setInterval(moveNo, 900);
-
-// YES click event
-yesBtn.addEventListener("click", () => {
-  noBtn.classList.add("explode");
-
-  setTimeout(() => noBtn.remove(), 350);
-
-  // Flowers rain
-  for (let i = 0; i < 40; i++) {
-    const flower = document.createElement("div");
-    flower.classList.add("flower");
-    flower.textContent = ["🌸","🌹","💐","🌺","🌷"][Math.floor(Math.random()*5)];
-    flower.style.left = Math.random() * 100 + "vw";
-    flower.style.top = "-20px";
-    document.body.appendChild(flower);
-    setTimeout(() => flower.remove(), 3000);
-  }
-
-  message.style.display = "block";
+  noBtn.innerText = teasing[Math.floor(Math.random() * teasing.length)];
 });
+
+yesBtn.addEventListener("click", () => {
+  // NO explodes
+  noBtn.innerText = "💥";
+  noBtn.style.transform = "scale(2)";
+  setTimeout(() => noBtn.style.display = "none", 500);
+
+  // Message
+  msg.innerHTML = "YAYYY 😍💖 I LOVE YOU MY CUTIE 💌";
+
+  // Hearts & Flowers Explosion
+  for (let i = 0; i < 40; i++) {
+    createLove();
+  }
+});
+
+function createLove() {
+  const emoji = Math.random() > 0.5 ? "💖" : "🌸";
+  const el = document.createElement("div");
+  el.className = "heart";
+  el.innerText = emoji;
+  el.style.left = Math.random() * window.innerWidth + "px";
+  el.style.top = "100%";
+  document.body.appendChild(el);
+
+  setTimeout(() => el.remove(), 3000);
+}
 </script>
 
 </body>
