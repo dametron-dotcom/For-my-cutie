@@ -13,7 +13,7 @@ body {
   justify-content: center;
   align-items: center;
   font-family: Poppins, sans-serif;
-  background: radial-gradient(circle, #ffd6e0, #ff8fab);
+  background: linear-gradient(135deg, #ffc2d1, #ff8fab);
 }
 
 .container {
@@ -22,26 +22,26 @@ body {
 }
 
 .name {
-  font-size: 44px;
+  font-size: 46px;
   font-weight: 900;
   color: #c9184a;
 }
 
 .question {
-  font-size: 50px;
+  font-size: 52px;
   font-weight: 900;
-  margin: 18px 0 30px;
+  margin: 16px 0 30px;
 }
 
 .buttons {
   display: flex;
-  gap: 25px;
+  gap: 20px;
   justify-content: center;
 }
 
 button {
   font-size: 22px;
-  padding: 14px 40px;
+  padding: 14px 42px;
   border-radius: 40px;
   border: none;
   font-weight: bold;
@@ -60,7 +60,7 @@ button {
 }
 
 .taunt {
-  margin-top: 15px;
+  margin-top: 18px;
   font-size: 18px;
   color: #7a0a2a;
   height: 25px;
@@ -68,12 +68,12 @@ button {
 
 /* Explosion */
 .explode {
-  animation: boom 0.4s ease forwards;
+  animation: boom 0.45s ease forwards;
 }
 
 @keyframes boom {
   to {
-    transform: scale(4) rotate(360deg);
+    transform: scale(3.5) rotate(360deg);
     opacity: 0;
   }
 }
@@ -81,7 +81,7 @@ button {
 /* Flowers */
 .flower {
   position: absolute;
-  font-size: 28px;
+  font-size: 32px;
   animation: fall 3s linear forwards;
 }
 
@@ -92,8 +92,8 @@ button {
   }
 }
 
-/* Love Letter */
-.letter {
+/* Love Message */
+.message {
   display: none;
   position: fixed;
   top: 50%;
@@ -106,10 +106,10 @@ button {
   font-weight: bold;
   color: #9d0208;
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  animation: open 0.6s ease forwards;
+  animation: pop 0.6s ease forwards;
 }
 
-@keyframes open {
+@keyframes pop {
   to {
     transform: translate(-50%, -50%) scale(1);
   }
@@ -131,8 +131,8 @@ button {
 /* F1 Car */
 .car {
   position: absolute;
-  font-size: 55px;
-  transition: 0.2s linear;
+  font-size: 60px;
+  transition: 0.15s linear;
 }
 </style>
 </head>
@@ -151,10 +151,10 @@ button {
   <div class="taunt" id="taunt"></div>
 </div>
 
-<div class="letter" id="letter">
+<div class="message" id="message">
 💌 My Cutie,<br><br>
-You make my world brighter every day.<br>
-You are my favorite forever.<br><br>
+You are my favorite person in the world.<br>
+I choose you today and always.<br><br>
 Love,<br>
 Your Cutie 💕
 </div>
@@ -165,47 +165,48 @@ Your Cutie 💕
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const taunt = document.getElementById("taunt");
-const letter = document.getElementById("letter");
+const message = document.getElementById("message");
 const car = document.getElementById("car");
 
 const savageTaunts = [
-  "Not happening 😈",
-  "You're chasing love now?",
+  "Nice try 😈",
   "Catch me first 💨",
-  "Nope. Never 😏",
-  "Try harder baby 😜",
-  "You wish 💅",
-  "Too slow 😎"
+  "Nope 😏",
+  "Dream on 💅",
+  "Too slow 😎",
+  "Almost had me 😜",
+  "You wish 💖"
 ];
 
-// Move NO constantly
 function moveNo() {
-  const x = Math.random() * (window.innerWidth - 140);
-  const y = Math.random() * (window.innerHeight - 140);
+  const x = Math.random() * (window.innerWidth - 160);
+  const y = Math.random() * (window.innerHeight - 160);
+
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 
-  taunt.textContent = savageTaunts[Math.floor(Math.random()*savageTaunts.length)];
+  taunt.textContent = savageTaunts[Math.floor(Math.random() * savageTaunts.length)];
 
-  // Move car chasing NO
-  car.style.left = x - 60 + "px";
+  // Car chases NO
+  car.style.left = (x - 70) + "px";
   car.style.top = y + "px";
 }
 
+// Move NO when hovered
 noBtn.addEventListener("mouseenter", moveNo);
 
-// Auto keep NO moving every second
-setInterval(moveNo, 1200);
+// Keep NO moving forever
+setInterval(moveNo, 1000);
 
-// YES CLICKED — CHAOS + ROMANCE
+// YES click = romance chaos
 yesBtn.addEventListener("click", () => {
   noBtn.classList.add("explode");
   taunt.textContent = "";
 
-  setTimeout(() => noBtn.remove(), 350);
+  setTimeout(() => noBtn.remove(), 400);
 
-  // Flowers storm
-  for (let i = 0; i < 45; i++) {
+  // Flowers burst
+  for (let i = 0; i < 40; i++) {
     const flower = document.createElement("div");
     flower.classList.add("flower");
     flower.textContent = ["🌸","🌹","💐","🌺","🌷"][Math.floor(Math.random()*5)];
@@ -216,15 +217,21 @@ yesBtn.addEventListener("click", () => {
     setTimeout(() => flower.remove(), 3000);
   }
 
-  // Love letter reveal
-  letter.style.display = "block";
-
-  // Kiss explosions
+  // Kiss pops
   for (let i = 0; i < 12; i++) {
     const kiss = document.createElement("div");
     kiss.classList.add("kiss");
     kiss.textContent = "💋";
     kiss.style.left = Math.random() * 100 + "vw";
     kiss.style.top = Math.random() * 100 + "vh";
-    document.body צור
-::contentReference[oaicite:0]{index=0}
+    document.body.appendChild(kiss);
+    setTimeout(() => kiss.remove(), 1200);
+  }
+
+  // Show love message
+  message.style.display = "block";
+});
+</script>
+
+</body>
+</html>
