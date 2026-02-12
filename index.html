@@ -1,223 +1,141 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>For My Cutie 💖</title>
+  <meta charset="UTF-8">
+  <title>Valentine Proposal</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: pink;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
 
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ffd6e8, #ffeaf3);
-  overflow: hidden;
-}
+    .card {
+      background: #ffe6f0;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: heartbeat 1s infinite;
+    }
 
-.container {
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(14px);
-  padding: 55px 75px;
-  border-radius: 35px;
-  box-shadow: 0 15px 45px rgba(255, 100, 170, 0.35);
-  position: relative;
-  z-index: 5;
-}
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
 
-h1 {
-  color: #ff4f9a;
-  font-size: 2.8rem;
-}
+    h1 {
+      color: #d6336c;
+    }
 
-p {
-  color: #ff6fae;
-  font-size: 1.2rem;
-  margin-bottom: 25px;
-}
+    .buttons {
+      margin-top: 20px;
+    }
 
-button {
-  padding: 14px 36px;
-  border-radius: 35px;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  transition: 0.15s ease;
-}
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px;
+    }
 
-/* YES BUTTON */
-#yesBtn {
-  background: #ff4f9a;
-  color: white;
-  box-shadow: 0 6px 18px rgba(255, 79, 154, 0.5);
-}
+    #yes {
+      background: #ff4d88;
+      color: white;
+    }
 
-#yesBtn:hover {
-  transform: scale(1.1);
-  background: #ff2f86;
-}
+    #no {
+      background: #fff0f5;
+      color: #d6336c;
+      position: absolute;
+    }
 
-/* NO BUTTON */
-#noBtn {
-  background: white;
-  color: #ff4f9a;
-  border: 2px solid #ff4f9a;
-  position: fixed;
-}
+    .celebration {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      display: none;
+      color: #d6336c;
+      font-size: 24px;
+    }
 
-/* Tease message */
-#tease {
-  margin-top: 12px;
-  color: #ff3f9a;
-  font-weight: bold;
-}
+    .heart, .flower {
+      position: absolute;
+      font-size: 24px;
+      animation: float 5s linear infinite;
+    }
 
-/* Explosion hearts */
-.burst {
-  position: absolute;
-  font-size: 34px;
-  animation: explode 1.5s ease-out forwards;
-}
-
-@keyframes explode {
-  from { transform: scale(1) translate(0,0); opacity: 1; }
-  to { transform: scale(2) translate(var(--x), var(--y)); opacity: 0; }
-}
-
-/* Floating celebration */
-.float {
-  position: absolute;
-  font-size: 30px;
-  animation: floatUp 4s linear forwards;
-}
-
-@keyframes floatUp {
-  0% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-350px); }
-}
-
-#message {
-  font-size: 1.3rem;
-  color: #ff2f86;
-  font-weight: bold;
-  margin-top: 20px;
-  line-height: 1.7;
-}
-</style>
+    @keyframes float {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="card">
+    <h1>My Cutie 💖<br>Will you be my Valentine?</h1>
+    <div class="buttons">
+      <button id="yes">YES 💘</button>
+      <button id="no">NO 😜</button>
+    </div>
+  </div>
 
-<div class="container">
-  <h1>My Cutie 💖</h1>
-  <p>Will you be my Valentine? <br> — From Your Cutie</p>
+  <div class="celebration" id="celebration">
+    <p>Yay! You said YES! 💖🌸<br>Love is in the air!</p>
+  </div>
 
-  <button id="yesBtn">YES 💘</button>
-  <button id="noBtn">NO 😈</button>
+  <script>
+    const noBtn = document.getElementById('no');
+    const yesBtn = document.getElementById('yes');
+    const celebration = document.getElementById('celebration');
+    const teasingMessages = [
+      "Give up already 😘",
+      "You can’t escape love 💕",
+      "Still trying? 😏",
+      "Love always wins 💖"
+    ];
 
-  <div id="tease"></div>
-  <div id="message"></div>
-</div>
+    // Make NO button run away on hover
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+      noBtn.textContent = "NO " + teasingMessages[Math.floor(Math.random() * teasingMessages.length)];
+    });
 
-<script>
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const tease = document.getElementById("tease");
-const msg = document.getElementById("message");
+    // YES button celebration
+    yesBtn.addEventListener('click', () => {
+      celebration.style.display = 'block';
+      noBtn.style.display = 'none';
 
-let dodgeInterval;
+      // Exploding hearts + flowers
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = '💖';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = Math.random() * window.innerHeight + 'px';
+        document.body.appendChild(heart);
 
-// Tease messages
-const teaseLines = [
-  "Nice try 😏",
-  "You can't catch me 😈",
-  "Too slow 😂",
-  "Not today, Cutie 😜",
-  "Love always wins 💕",
-  "Give up already 😘"
-];
-
-// Start dodging when mouse gets near
-noBtn.addEventListener("mouseenter", () => {
-  dodgeInterval = setInterval(moveNo, 200);
-});
-
-// Stop dodging when mouse leaves
-noBtn.addEventListener("mouseleave", () => {
-  clearInterval(dodgeInterval);
-});
-
-// Move NO randomly
-function moveNo() {
-  const x = Math.random() * (window.innerWidth - 160);
-  const y = Math.random() * (window.innerHeight - 160);
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-
-  tease.innerText = teaseLines[Math.floor(Math.random() * teaseLines.length)];
-}
-
-// YES clicked
-yesBtn.addEventListener("click", () => {
-  clearInterval(dodgeInterval);
-
-  // NO explodes
-  noBtn.innerText = "💥";
-  noBtn.style.transform = "scale(2)";
-  setTimeout(() => noBtn.style.display = "none", 400);
-
-  // Romantic love letter
-  msg.innerHTML = `
-  💌 My Sweet Cutie,<br><br>
-  You just made my heart the happiest ever 💖  
-  Thank you for being my Valentine.  
-  You mean more to me than words can say.  
-  I love you endlessly 💞  
-  <br><br> — Forever Yours 💘
-  `;
-
-  // Hearts burst from center
-  for (let i = 0; i < 35; i++) burstHeart();
-
-  // Flowers + hearts flood screen
-  for (let i = 0; i < 85; i++) floatLove();
-});
-
-// Heart burst from center
-function burstHeart() {
-  const heart = document.createElement("div");
-  heart.className = "burst";
-  heart.innerText = "💖";
-
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
-
-  heart.style.left = cx + "px";
-  heart.style.top = cy + "px";
-
-  heart.style.setProperty("--x", (Math.random() * 600 - 300) + "px");
-  heart.style.setProperty("--y", (Math.random() * 600 - 300) + "px");
-
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 1500);
-}
-
-// Floating hearts + flowers
-function floatLove() {
-  const el = document.createElement("div");
-  el.className = "float";
-  el.innerText = Math.random() > 0.5 ? "🌸" : "💖";
-
-  el.style.left = Math.random() * window.innerWidth + "px";
-  el.style.top = "100%";
-
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 4000);
-}
-</script>
-
+        const flower = document.createElement('div');
+        flower.className = 'flower';
+        flower.textContent = '🌸';
+        flower.style.left = Math.random() * window.innerWidth + 'px';
+        flower.style.top = Math.random() * window.innerHeight + 'px';
+        document.body.appendChild(flower);
+      }
+    });
+  </script>
 </body>
 </html>
+"
