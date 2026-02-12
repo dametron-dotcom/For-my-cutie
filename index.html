@@ -1,172 +1,229 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Valentine Proposal</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: pink;
-      overflow: hidden;
-      font-family: 'Arial', sans-serif;
-    }
+<title>For My Cutie 💖</title>
 
-    .card {
-      background: #ffe6f0;
-      padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      animation: heartbeat 1s infinite;
-      position: relative;
-    }
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  background: url('f1-bg.jpg') center/cover no-repeat fixed;
+  overflow: hidden;
+}
 
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
+/* Dark overlay for readability */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 210, 230, 0.55);
+  z-index: -1;
+}
 
-    h1 {
-      color: #d6336c;
-    }
+/* Envelope card */
+.card {
+  background: rgba(255,255,255,0.92);
+  padding: 55px 70px;
+  border-radius: 35px;
+  box-shadow: 0 20px 50px rgba(255, 80, 140, 0.35);
+  position: relative;
+  backdrop-filter: blur(12px);
+}
 
-    .buttons {
-      margin-top: 20px;
-      position: relative;
-    }
+/* Title */
+h1 {
+  color: #ff3f8f;
+  font-size: 2.4rem;
+}
 
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 18px;
-    }
+/* Message */
+p {
+  color: #ff5aa2;
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
 
-    #yes {
-      background: #ff4d88;
-      color: white;
-    }
+/* Buttons */
+button {
+  padding: 14px 38px;
+  border-radius: 35px;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
 
-    #no {
-      background: #fff0f5;
-      color: #d6336c;
-      position: absolute;
-      top: 0;
-      left: 120px;
-    }
+/* YES */
+#yesBtn {
+  background: #ff4f9a;
+  color: white;
+  box-shadow: 0 6px 18px rgba(255, 79, 154, 0.6);
+}
 
-    .celebration {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      display: none;
-      color: #d6336c;
-      font-size: 24px;
-      z-index: 1000;
-    }
+#yesBtn:hover {
+  transform: scale(1.1);
+}
 
-    .particle {
-      position: absolute;
-      font-size: 24px;
-      animation: explode 1.5s ease-out forwards;
-    }
+/* NO */
+#noBtn {
+  background: white;
+  color: #ff3f8f;
+  border: 2px solid #ff3f8f;
+  position: fixed;
+}
 
-    @keyframes explode {
-      from { transform: translate(0,0) scale(1); opacity: 1; }
-      to { transform: translate(var(--x), var(--y)) scale(0.5); opacity: 0; }
-    }
+/* Tease text */
+#tease {
+  margin-top: 12px;
+  color: #ff2f86;
+  font-weight: bold;
+}
 
-    .background-heart, .background-flower {
-      position: absolute;
-      font-size: 20px;
-      animation: float 6s linear infinite;
-    }
+/* Love letter */
+#loveMessage {
+  margin-top: 20px;
+  color: #ff2f86;
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1.7;
+}
 
-    @keyframes float {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-100vh); opacity: 0; }
-    }
-  </style>
+/* Explosions */
+.pop {
+  position: absolute;
+  font-size: 32px;
+  animation: explode 1.6s ease forwards;
+}
+
+@keyframes explode {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(2.2) translate(var(--x), var(--y)); opacity: 0; }
+}
+
+/* Floating flood */
+.float {
+  position: absolute;
+  font-size: 28px;
+  animation: floatUp 4.5s linear forwards;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-400px); opacity: 0; }
+}
+</style>
 </head>
+
 <body>
-  <div class="card">
-    <h1>My Cutie 💖<br>Will you be my Valentine?</h1>
-    <div class="buttons">
-      <button id="yes">YES 💘</button>
-      <button id="no">NO 😜</button>
-    </div>
-  </div>
 
-  <div class="celebration" id="celebration">
-    <p>Yay! You said YES! 💖🌸<br>Love is in the air!</p>
-  </div>
+<div class="card">
+  <h1>💌 My Cutie</h1>
+  <p>Will you be my Valentine?<br>— From Your Cutie</p>
 
-  <script>
-    const noBtn = document.getElementById('no');
-    const yesBtn = document.getElementById('yes');
-    const celebration = document.getElementById('celebration');
-    const teasingMessages = [
-      "Give up already 😘",
-      "You can’t escape love 💕",
-      "Still trying? 😏",
-      "Love always wins 💖"
-    ];
+  <button id="yesBtn">YES 💖</button>
+  <button id="noBtn">NO 😈</button>
 
-    // Make NO button run away on hover
-    noBtn.addEventListener('mouseover', () => {
-      moveNo();
-      noBtn.textContent = "NO " + teasingMessages[Math.floor(Math.random() * teasingMessages.length)];
-    });
+  <div id="tease"></div>
+  <div id="loveMessage"></div>
+</div>
 
-    // Keep NO button floating around randomly
-    function moveNo() {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
-      noBtn.style.left = x + 'px';
-      noBtn.style.top = y + 'px';
-    }
-    setInterval(moveNo, 3000);
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const tease = document.getElementById("tease");
+const love = document.getElementById("loveMessage");
 
-    // YES button celebration
-    yesBtn.addEventListener('click', () => {
-      celebration.style.display = 'block';
-      noBtn.style.display = 'none';
+let dodgeInterval;
 
-      // Exploding hearts + flowers
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.textContent = Math.random() > 0.5 ? '💖' : '🌸';
-        particle.style.left = '50%';
-        particle.style.top = '50%';
-        const angle = Math.random() * 2 * Math.PI;
-        const distance = Math.random() * 300 + 50;
-        particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
-        particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
-        document.body.appendChild(particle);
-        setTimeout(() => particle.remove(), 2000);
-      }
+const teasingLines = [
+  "Nice try 😏",
+  "Not getting a NO today 😈",
+  "Too slow 😂",
+  "Catch me if you can 😜",
+  "Love wins anyway 💘",
+  "You already lost 😘"
+];
 
-      // Continuous background hearts/flowers
-      setInterval(() => {
-        const bg = document.createElement('div');
-        bg.className = Math.random() > 0.5 ? 'background-heart' : 'background-flower';
-        bg.textContent = bg.className.includes('heart') ? '💖' : '🌸';
-        bg.style.left = Math.random() * window.innerWidth + 'px';
-        bg.style.top = window.innerHeight + 'px';
-        document.body.appendChild(bg);
-        setTimeout(() => bg.remove(), 6000);
-      }, 500);
-    });
-  </script>
+// Move NO continuously when hovered
+noBtn.addEventListener("mouseenter", () => {
+  dodgeInterval = setInterval(moveNo, 180);
+});
+
+noBtn.addEventListener("mouseleave", () => {
+  clearInterval(dodgeInterval);
+});
+
+function moveNo() {
+  const x = Math.random() * (window.innerWidth - 160);
+  const y = Math.random() * (window.innerHeight - 120);
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+
+  tease.innerText = teasingLines[Math.floor(Math.random() * teasingLines.length)];
+}
+
+// YES click = romance explosion
+yesBtn.addEventListener("click", () => {
+  clearInterval(dodgeInterval);
+
+  // NO explodes then disappears
+  noBtn.innerText = "💥";
+  noBtn.style.transform = "scale(2)";
+  setTimeout(() => noBtn.style.display = "none", 350);
+
+  // Love letter reveal
+  love.innerHTML = `
+  💖 My Sweet Cutie,<br><br>
+  You just made my heart race faster than an F1 car 🏎️  
+  Thank you for being my Valentine.  
+  You are my favorite person in the world 💕  
+  <br><br> — Forever Yours 💌
+  `;
+
+  // Hearts burst from center
+  for (let i = 0; i < 40; i++) burst("💖");
+
+  // Flowers + hearts + racing flags flood screen
+  for (let i = 0; i < 100; i++) floatLove();
+});
+
+// Burst effect
+function burst(icon) {
+  const el = document.createElement("div");
+  el.className = "pop";
+  el.innerText = icon;
+
+  el.style.left = (window.innerWidth / 2) + "px";
+  el.style.top = (window.innerHeight / 2) + "px";
+
+  el.style.setProperty("--x", (Math.random() * 600 - 300) + "px");
+  el.style.setProperty("--y", (Math.random() * 600 - 300) + "px");
+
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1500);
+}
+
+// Floating love flood
+function floatLove() {
+  const el = document.createElement("div");
+  el.className = "float";
+
+  const options = ["🌸", "💖", "🏁"];
+  el.innerText = options[Math.floor(Math.random() * options.length)];
+
+  el.style.left = Math.random() * window.innerWidth + "px";
+  el.style.top = "100%";
+
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 4500);
+}
+</script>
+
 </body>
 </html>
-I
