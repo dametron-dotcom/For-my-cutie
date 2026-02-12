@@ -60,15 +60,13 @@ noBtn.addEventListener("mouseover", () => {
 // YES is clicked
 
 yesBtn.addEventListener("click", () => {
-  title.innerText = "Yayyy!! You Said YES 💖";
-  
-  finalText.style.display = "block";
-  finalText.innerHTML = `
-    💕 My Cutie, you just made me the happiest person alive 💕  
-    <br><br>
-    I promise to love you, spoil you, and choose you every single day 💌  
-    <br><br>
-    Forever yours,  
-    <strong>Your Cutie 💘</strong>
-  `;
+    title.textContent = "Yippeeee!";
+
+    catImg.src = "cat_dance.gif";
+
+    document.querySelector(".letter-window").classList.add("final");
+
+    buttons.style.display = "none";
+
+    finalText.style.display = "block";
 });
