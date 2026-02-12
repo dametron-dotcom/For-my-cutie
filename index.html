@@ -22,6 +22,7 @@
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       animation: heartbeat 1s infinite;
+      position: relative; /* important for NO button */
     }
 
     @keyframes heartbeat {
@@ -35,6 +36,7 @@
 
     .buttons {
       margin-top: 20px;
+      position: relative;
     }
 
     button {
@@ -55,6 +57,8 @@
       background: #fff0f5;
       color: #d6336c;
       position: absolute;
+      top: 0;
+      left: 120px; /* initial position */
     }
 
     .celebration {
@@ -66,17 +70,18 @@
       display: none;
       color: #d6336c;
       font-size: 24px;
+      z-index: 1000;
     }
 
-    .heart, .flower {
+    .particle {
       position: absolute;
       font-size: 24px;
-      animation: float 5s linear infinite;
+      animation: explode 1.5s ease-out forwards;
     }
 
-    @keyframes float {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-100vh); opacity: 0; }
+    @keyframes explode {
+      from { transform: translate(0,0) scale(1); opacity: 1; }
+      to { transform: translate(var(--x), var(--y)) scale(0.5); opacity: 0; }
     }
   </style>
 </head>
@@ -106,12 +111,18 @@
 
     // Make NO button run away on hover
     noBtn.addEventListener('mouseover', () => {
+      moveNo();
+      noBtn.textContent = "NO " + teasingMessages[Math.floor(Math.random() * teasingMessages.length)];
+    });
+
+    // Keep NO button floating around randomly
+    function moveNo() {
       const x = Math.random() * (window.innerWidth - 100);
       const y = Math.random() * (window.innerHeight - 50);
       noBtn.style.left = x + 'px';
       noBtn.style.top = y + 'px';
-      noBtn.textContent = "NO " + teasingMessages[Math.floor(Math.random() * teasingMessages.length)];
-    });
+    }
+    setInterval(moveNo, 3000); // moves every 3s
 
     // YES button celebration
     yesBtn.addEventListener('click', () => {
@@ -120,22 +131,19 @@
 
       // Exploding hearts + flowers
       for (let i = 0; i < 50; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.textContent = '💖';
-        heart.style.left = Math.random() * window.innerWidth + 'px';
-        heart.style.top = Math.random() * window.innerHeight + 'px';
-        document.body.appendChild(heart);
-
-        const flower = document.createElement('div');
-        flower.className = 'flower';
-        flower.textContent = '🌸';
-        flower.style.left = Math.random() * window.innerWidth + 'px';
-        flower.style.top = Math.random() * window.innerHeight + 'px';
-        document.body.appendChild(flower);
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.textContent = Math.random() > 0.5 ? '💖' : '🌸';
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 300 + 50;
+        particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+        particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 2000);
       }
     });
   </script>
 </body>
 </html>
-"
