@@ -1,227 +1,168 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>For My Cutie 💖</title>
-
+<title>Valentine Proposal</title>
 <style>
 body {
   margin: 0;
   height: 100vh;
+  background: url('bg.jpg') center/cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
   font-family: 'Poppins', sans-serif;
-  background: url('f1-bg.jpg') center/cover no-repeat fixed;
   overflow: hidden;
 }
 
-/* Dark overlay for readability */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 210, 230, 0.55);
-  z-index: -1;
+.envelope {
+  background: rgba(255,255,255,0.9);
+  padding: 25px 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  max-width: 450px;
 }
 
-/* Envelope card */
-.card {
-  background: rgba(255,255,255,0.92);
-  padding: 55px 70px;
-  border-radius: 35px;
-  box-shadow: 0 20px 50px rgba(255, 80, 140, 0.35);
-  position: relative;
-  backdrop-filter: blur(12px);
+h2 {
+  color: #c2003a;
+  margin-bottom: 20px;
 }
 
-/* Title */
-h1 {
-  color: #ff3f8f;
-  font-size: 2.4rem;
-}
-
-/* Message */
-p {
-  color: #ff5aa2;
-  font-size: 1.2rem;
-  margin-bottom: 25px;
-}
-
-/* Buttons */
 button {
-  padding: 14px 38px;
-  border-radius: 35px;
-  font-size: 1.1rem;
+  padding: 12px 28px;
+  font-size: 18px;
+  border-radius: 50px;
   border: none;
   cursor: pointer;
+  margin: 8px;
   transition: 0.2s ease;
 }
 
-/* YES */
-#yesBtn {
-  background: #ff4f9a;
+#yes {
+  background: hotpink;
   color: white;
-  box-shadow: 0 6px 18px rgba(255, 79, 154, 0.6);
 }
 
-#yesBtn:hover {
-  transform: scale(1.1);
-}
-
-/* NO */
-#noBtn {
-  background: white;
-  color: #ff3f8f;
-  border: 2px solid #ff3f8f;
-  position: fixed;
-}
-
-/* Tease text */
-#tease {
-  margin-top: 12px;
-  color: #ff2f86;
-  font-weight: bold;
-}
-
-/* Love letter */
-#loveMessage {
-  margin-top: 20px;
-  color: #ff2f86;
-  font-size: 1.25rem;
-  font-weight: bold;
-  line-height: 1.7;
-}
-
-/* Explosions */
-.pop {
+#no {
+  background: black;
+  color: white;
   position: absolute;
-  font-size: 32px;
-  animation: explode 1.6s ease forwards;
 }
 
-@keyframes explode {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(2.2) translate(var(--x), var(--y)); opacity: 0; }
-}
-
-/* Floating flood */
-.float {
+.effects span {
   position: absolute;
-  font-size: 28px;
-  animation: floatUp 4.5s linear forwards;
+  font-size: 24px;
+  animation: fly 2.5s linear forwards;
 }
 
-@keyframes floatUp {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-400px); opacity: 0; }
+@keyframes fly {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-250px); }
+}
+
+.message {
+  font-size: 22px;
+  color: #d4004c;
+  margin-top: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>💌 My Cutie</h1>
-  <p>Will you be my Valentine?<br>— From Your Cutie</p>
-
-  <button id="yesBtn">YES 💖</button>
-  <button id="noBtn">NO 😈</button>
-
-  <div id="tease"></div>
-  <div id="loveMessage"></div>
+<div class="envelope">
+  <h2>💌 Will you be my Valentine,<br>MY Cutie?<br>From Your Cutie 💖</h2>
+  <button id="yes">YES 💘</button>
 </div>
 
+<button id="no">NO 😈</button>
+
+<div class="effects"></div>
+
 <script>
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const tease = document.getElementById("tease");
-const love = document.getElementById("loveMessage");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const effects = document.querySelector(".effects");
 
-let dodgeInterval;
+let yesClicked = false;
 
-const teasingLines = [
+const teaseMessages = [
   "Nice try 😏",
-  "Not getting a NO today 😈",
-  "Too slow 😂",
-  "Catch me if you can 😜",
-  "Love wins anyway 💘",
-  "You already lost 😘"
+  "No is not an option 😈",
+  "I'm too fast 💨",
+  "You're chasing love 💘",
+  "Try harder 😌",
+  "You want YES anyway 💕"
 ];
 
-// Move NO continuously when hovered
-noBtn.addEventListener("mouseenter", () => {
-  dodgeInterval = setInterval(moveNo, 180);
-});
+document.addEventListener("mousemove", (e) => {
+  if (yesClicked) return;
 
-noBtn.addEventListener("mouseleave", () => {
-  clearInterval(dodgeInterval);
+  const rect = noBtn.getBoundingClientRect();
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
+
+  const distX = Math.abs(mouseX - (rect.left + rect.width / 2));
+  const distY = Math.abs(mouseY - (rect.top + rect.height / 2));
+
+  if (distX < 140 && distY < 90) {
+    moveNo();
+    showTease();
+  }
 });
 
 function moveNo() {
-  const x = Math.random() * (window.innerWidth - 160);
-  const y = Math.random() * (window.innerHeight - 120);
+  const padding = 15;
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+  const newX = Math.random() * maxX;
+  const newY = Math.random() * maxY;
 
-  tease.innerText = teasingLines[Math.floor(Math.random() * teasingLines.length)];
+  noBtn.style.left = newX + "px";
+  noBtn.style.top = newY + "px";
+  noBtn.style.transition = "all 0.15s ease-out";
 }
 
-// YES click = romance explosion
-yesBtn.addEventListener("click", () => {
-  clearInterval(dodgeInterval);
+function showTease() {
+  const msg = document.createElement("span");
+  msg.textContent = teaseMessages[Math.floor(Math.random() * teaseMessages.length)];
+  msg.style.position = "absolute";
+  msg.style.left = noBtn.style.left;
+  msg.style.top = (parseFloat(noBtn.style.top) - 25) + "px";
+  msg.style.color = "#ff2a6d";
+  msg.style.fontSize = "16px";
+  msg.style.animation = "fly 1.5s forwards";
+  effects.appendChild(msg);
 
-  // NO explodes then disappears
-  noBtn.innerText = "💥";
-  noBtn.style.transform = "scale(2)";
-  setTimeout(() => noBtn.style.display = "none", 350);
+  setTimeout(() => msg.remove(), 1500);
+}
 
-  // Love letter reveal
-  love.innerHTML = `
-  💖 My Sweet Cutie,<br><br>
-  You just made my heart race faster than an F1 car 🏎️  
-  Thank you for being my Valentine.  
-  You are my favorite person in the world 💕  
-  <br><br> — Forever Yours 💌
+yesBtn.onclick = () => {
+  yesClicked = true;
+  noBtn.style.display = "none";
+
+  document.querySelector(".envelope").innerHTML = `
+    <h2>💖 YAYYYY! YOU'RE MY VALENTINE 💖</h2>
+    <div class="message">I promise love, laughter, and fast cars 🏎️💘</div>
   `;
 
-  // Hearts burst from center
-  for (let i = 0; i < 40; i++) burst("💖");
+  launchEffects();
+};
 
-  // Flowers + hearts + racing flags flood screen
-  for (let i = 0; i < 100; i++) floatLove();
-});
+function launchEffects() {
+  const icons = ["💖","🌸","🏁","💐","💘"];
 
-// Burst effect
-function burst(icon) {
-  const el = document.createElement("div");
-  el.className = "pop";
-  el.innerText = icon;
+  for (let i = 0; i < 80; i++) {
+    const span = document.createElement("span");
+    span.textContent = icons[Math.floor(Math.random() * icons.length)];
+    span.style.left = Math.random() * window.innerWidth + "px";
+    span.style.top = window.innerHeight + "px";
+    span.classList.add("effects");
+    document.body.appendChild(span);
 
-  el.style.left = (window.innerWidth / 2) + "px";
-  el.style.top = (window.innerHeight / 2) + "px";
-
-  el.style.setProperty("--x", (Math.random() * 600 - 300) + "px");
-  el.style.setProperty("--y", (Math.random() * 600 - 300) + "px");
-
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 1500);
-}
-
-// Floating love flood
-function floatLove() {
-  const el = document.createElement("div");
-  el.className = "float";
-
-  const options = ["🌸", "💖", "🏁"];
-  el.innerText = options[Math.floor(Math.random() * options.length)];
-
-  el.style.left = Math.random() * window.innerWidth + "px";
-  el.style.top = "100%";
-
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 4500);
+    setTimeout(() => span.remove(), 2500);
+  }
 }
 </script>
 
