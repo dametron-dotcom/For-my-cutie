@@ -59,10 +59,6 @@ noBtn.addEventListener("mouseover", () => {
 
 // YES is clicked
 
-const yesBtn = document.querySelector(".yes-btn");
-const finalText = document.getElementById("final-text");
-const title = document.getElementById("letter-title");
-
 yesBtn.addEventListener("click", () => {
   title.innerText = "Yayyy!! You Said YES 💖";
   
