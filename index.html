@@ -1,170 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Valentine Proposal</title>
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: url('bg.jpg') center/cover no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Valentine Letter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-.envelope {
-  background: rgba(255,255,255,0.9);
-  padding: 25px 40px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-  max-width: 450px;
-}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aldrich&family=Pixelify+Sans:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Envelope Screen -->
+    <div id="envelope-container">
+      <img src="envelope.png" alt="Envelope" id="envelope" />
+      <p>♡ Letter for You ♡</p>
+    </div>
 
-h2 {
-  color: #c2003a;
-  margin-bottom: 20px;
-}
+    <!-- Letter Screen -->
+    <div id="letter-container">
+      <div class="letter-window">
+        <h1 id="letter-title">Will you be my Valentine?</h1>
 
-button {
-  padding: 12px 28px;
-  font-size: 18px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  margin: 8px;
-  transition: 0.2s ease;
-}
+        <img src="cat_heart.gif" class="cat" id="letter-cat" />
 
-#yes {
-  background: hotpink;
-  color: white;
-}
+        <div class="buttons" id="letter-buttons">
+          <img src="yes.png" class="btn yes-btn" alt="Yes" />
 
-#no {
-  background: black;
-  color: white;
-  position: absolute;
-}
+          <div class="no-wrapper">
+            <img src="no.png" class="btn no-btn" alt="No" />
+          </div>
+        </div>
 
-.effects span {
-  position: absolute;
-  font-size: 24px;
-  animation: fly 2.5s linear forwards;
-}
-
-@keyframes fly {
-  0% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-250px); }
-}
-
-.message {
-  font-size: 22px;
-  color: #d4004c;
-  margin-top: 15px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="envelope">
-  <h2>💌 Will you be my Valentine,<br>MY Cutie?<br>From Your Cutie 💖</h2>
-  <button id="yes">YES 💘</button>
-</div>
-
-<button id="no">NO 😈</button>
-
-<div class="effects"></div>
-
-<script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-const effects = document.querySelector(".effects");
-
-let yesClicked = false;
-
-const teaseMessages = [
-  "Nice try 😏",
-  "No is not an option 😈",
-  "I'm too fast 💨",
-  "You're chasing love 💘",
-  "Try harder 😌",
-  "You want YES anyway 💕"
-];
-
-document.addEventListener("mousemove", (e) => {
-  if (yesClicked) return;
-
-  const rect = noBtn.getBoundingClientRect();
-  const mouseX = e.clientX;
-  const mouseY = e.clientY;
-
-  const distX = Math.abs(mouseX - (rect.left + rect.width / 2));
-  const distY = Math.abs(mouseY - (rect.top + rect.height / 2));
-
-  if (distX < 140 && distY < 90) {
-    moveNo();
-    showTease();
-  }
-});
-
-function moveNo() {
-  const padding = 15;
-  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-
-  const newX = Math.random() * maxX;
-  const newY = Math.random() * maxY;
-
-  noBtn.style.left = newX + "px";
-  noBtn.style.top = newY + "px";
-  noBtn.style.transition = "all 0.15s ease-out";
-}
-
-function showTease() {
-  const msg = document.createElement("span");
-  msg.textContent = teaseMessages[Math.floor(Math.random() * teaseMessages.length)];
-  msg.style.position = "absolute";
-  msg.style.left = noBtn.style.left;
-  msg.style.top = (parseFloat(noBtn.style.top) - 25) + "px";
-  msg.style.color = "#ff2a6d";
-  msg.style.fontSize = "16px";
-  msg.style.animation = "fly 1.5s forwards";
-  effects.appendChild(msg);
-
-  setTimeout(() => msg.remove(), 1500);
-}
-
-yesBtn.onclick = () => {
-  yesClicked = true;
-  noBtn.style.display = "none";
-
-  document.querySelector(".envelope").innerHTML = `
-    <h2>💖 YAYYYY! YOU'RE MY VALENTINE 💖</h2>
-    <div class="message">I promise love, laughter, and fast cars 🏎️💘</div>
-  `;
-
-  launchEffects();
-};
-
-function launchEffects() {
-  const icons = ["💖","🌸","🏁","💐","💘"];
-
-  for (let i = 0; i < 80; i++) {
-    const span = document.createElement("span");
-    span.textContent = icons[Math.floor(Math.random() * icons.length)];
-    span.style.left = Math.random() * window.innerWidth + "px";
-    span.style.top = window.innerHeight + "px";
-    span.classList.add("effects");
-    document.body.appendChild(span);
-
-    setTimeout(() => span.remove(), 2500);
-  }
-}
-</script>
-
-</body>
-</html>
+        <p id="final-text" class="final-text" style="display: none">
+          <strong>Valentine Date:</strong> Meow Restaurant at 7pm. Dress fancy!
+        </p>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>,,
